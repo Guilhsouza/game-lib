@@ -1,15 +1,33 @@
+interface Game {
+  id: number;
+  title: string;
+  cover: string;
+}
+
 import React, { useState } from 'react'
 
 export default function App() {
+  const [games, setGames] = useState<Game[]>([])
   const [title, setTitle] = useState('')
   const [cover, setCover] = useState('')
 
+  const addGame = (title: string, cover: string) => {
+    const id = Math.floor(Math.random() * 1000000)
+    const game = { id, title, cover }
+    setGames((state) => {
+      return [...state, game]
+    })
+  }
+
   const handleSubmit = (ev: React.FormEvent) => {
     ev.preventDefault()
-    console.log({ title, cover })
+
+    addGame(title, cover)
+
     setTitle('')
     setCover('')
   }
+
 
   return (
     <div id='app'>
@@ -43,6 +61,16 @@ export default function App() {
           <button type='submit'>Adicionar jogo</button>
         </div>
       </form>
+      <div className='games'>
+        {
+          games.map((game) => (
+            <div key={game.id}>
+              <img src={game.cover} alt='cover Image' />
+              <h2>{game.title}</h2>
+              <button>Remover</button>
+            </div>
+          ))}
+      </div>
     </div>
   )
 }

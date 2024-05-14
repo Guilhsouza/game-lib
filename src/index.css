@@ -33,7 +33,9 @@ h1 {
 }
 
 form {
-  display: inline-flex;
+  display: flex;
+  align-items: end;
+  gap: 2rem;
 }
 
 input {
