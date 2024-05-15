@@ -7,7 +7,13 @@ interface Game {
 import React, { useState } from 'react'
 
 export default function App() {
-  const [games, setGames] = useState<Game[]>([])
+  const [games, setGames] = useState<Game[]>(() => {
+    const storagedGames = localStorage.getItem('game-lib')
+
+    if (!storagedGames) return []
+
+    return JSON.parse(storagedGames)
+  })
   const [title, setTitle] = useState('')
   const [cover, setCover] = useState('')
 
@@ -15,12 +21,18 @@ export default function App() {
     const id = Math.floor(Math.random() * 1000000)
     const game = { id, title, cover }
     setGames((state) => {
-      return [...state, game]
+      const newState = [...state, game]
+      localStorage.setItem('game-lib', JSON.stringify(newState))
+      return newState
     })
   }
 
   const removeGame = (id: number) => {
-    setGames(state => state.filter(game => game.id !== id))
+    setGames(state => {
+      const updtState = state.filter(game => game.id !== id)
+      localStorage.setItem('game-lib', JSON.stringify(updtState))
+      return updtState
+    })
   }
 
   const handleSubmit = (ev: React.FormEvent) => {
