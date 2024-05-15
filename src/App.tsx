@@ -19,6 +19,10 @@ export default function App() {
     })
   }
 
+  const removeGame = (id: number) => {
+    setGames(state => state.filter(game => game.id !== id))
+  }
+
   const handleSubmit = (ev: React.FormEvent) => {
     ev.preventDefault()
 
@@ -64,10 +68,12 @@ export default function App() {
       <div className='games'>
         {
           games.map((game) => (
-            <div key={game.id}>
+            <div className='game' key={game.id}>
               <img src={game.cover} alt='cover Image' />
-              <h2>{game.title}</h2>
-              <button>Remover</button>
+              <div className='gameContent'>
+                <h2>{game.title}</h2>
+                <button onClick={() => removeGame(game.id)}>Remover</button>
+              </div>
             </div>
           ))}
       </div>

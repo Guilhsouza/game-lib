@@ -67,6 +67,22 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+h2 {
+  margin-bottom: 1.6rem;
+}
+
+img {
+  width: 20rem;
+  height: 15rem;
+  object-fit: cover;
+}
+
+.game {
+  margin-top: 3rem;
+  display: flex;
+  gap: 4rem;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
