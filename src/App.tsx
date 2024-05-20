@@ -4,7 +4,9 @@ interface Game {
   cover: string;
 }
 
-import React, { useState } from 'react'
+import { useState } from 'react'
+import Game from './components/RenderGame';
+import NewFormGame from './components/NewFormGame';
 
 export default function App() {
   const [games, setGames] = useState<Game[]>(() => {
@@ -14,8 +16,6 @@ export default function App() {
 
     return JSON.parse(storagedGames)
   })
-  const [title, setTitle] = useState('')
-  const [cover, setCover] = useState('')
 
   const addGame = (title: string, cover: string) => {
     const id = Math.floor(Math.random() * 1000000)
@@ -35,60 +35,22 @@ export default function App() {
     })
   }
 
-  const handleSubmit = (ev: React.FormEvent) => {
-    ev.preventDefault()
-
-    addGame(title, cover)
-
-    setTitle('')
-    setCover('')
-  }
-
-
   return (
     <div id='app'>
-      <h1>Biblioteca de Jogos</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor='title'>Titulo do jogo: </label>
-          <input
-            type='text'
-            name='title'
-            id='title'
-            value={title}
-            onChange={(ev: React.ChangeEvent<HTMLInputElement>) => {
-              setTitle(ev.target.value)
-            }}
-          />
-        </div>
-        <div>
-          <label htmlFor='cover'>Capa: </label>
-          <input
-            type='text'
-            name='cover'
-            id='cover'
-            value={cover}
-            onChange={(ev: React.ChangeEvent<HTMLInputElement>) => {
-              setCover(ev.target.value)
-            }}
-          />
-        </div>
-        <div>
-          <button type='submit'>Adicionar jogo</button>
-        </div>
-      </form>
+      <NewFormGame addGame={addGame} />
+
       <div className='games'>
         {
           games.map((game) => (
-            <div className='game' key={game.id}>
-              <img src={game.cover} alt='cover Image' />
-              <div className='gameContent'>
-                <h2>{game.title}</h2>
-                <button onClick={() => removeGame(game.id)}>Remover</button>
-              </div>
-            </div>
+            <Game
+              key={game.id}
+              title={game.title}
+              cover={game.cover}
+              onRemove={() => { removeGame(game.id) }}
+            />
           ))}
       </div>
-    </div>
+
+    </div >
   )
 }
