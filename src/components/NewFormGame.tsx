@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import TextInput from './TextInput.tsx';
 
 interface addGameFunc {
     addGame: (title: string, cover: string) => void;
@@ -21,30 +22,8 @@ export default function NewFormGame({ addGame }: addGameFunc) {
         <>
             <h1>Biblioteca de Jogos</h1>
             <form onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor='title'>Titulo do jogo: </label>
-                    <input
-                        type='text'
-                        name='title'
-                        id='title'
-                        value={title}
-                        onChange={(ev: React.ChangeEvent<HTMLInputElement>) => {
-                            setTitle(ev.target.value)
-                        }}
-                    />
-                </div>
-                <div>
-                    <label htmlFor='cover'>Capa: </label>
-                    <input
-                        type='text'
-                        name='cover'
-                        id='cover'
-                        value={cover}
-                        onChange={(ev: React.ChangeEvent<HTMLInputElement>) => {
-                            setCover(ev.target.value)
-                        }}
-                    />
-                </div>
+                <TextInput label='Titulo do Jogo: ' value={title} setValue={setTitle} />
+                <TextInput label='Capa do jogo: ' value={cover} setValue={setCover} />
                 <div>
                     <button type='submit'>Adicionar jogo</button>
                 </div>
